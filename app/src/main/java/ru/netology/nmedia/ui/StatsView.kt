@@ -162,11 +162,9 @@ class StatsView @JvmOverloads constructor(
         for ((index, datum) in data.withIndex()) {
 
             val datumInt: Int = datum.toInt()
-
             val persent = if(datumInt<=1)1 else  datumInt*4
 
 
-            // val persent = datumInt()
             //Для отображения текста выберем другую«кисть»:
             //И в onDraw просто выведем текст, используя format:
             canvas.drawText(
