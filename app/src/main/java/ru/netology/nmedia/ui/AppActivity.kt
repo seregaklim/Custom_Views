@@ -12,9 +12,9 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
      //   A: мы хотим, чтобы StatsView принимала на вход данные, по которым сама рассчитывала проценты:
 
         findViewById<StatsView>(R.id.stats).data = listOf(
+          500F,
             500F,
-            500F,
-            500F,
+           500F,
             500F,
         )
 

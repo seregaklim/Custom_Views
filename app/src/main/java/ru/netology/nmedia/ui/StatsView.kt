@@ -131,7 +131,11 @@ class StatsView @JvmOverloads constructor(
         //25% = 3600 * 0.25 = 90 градусов (дуга)(поменяй дугу сместится угол дуги)
         var startFrom = -90F
         for ((index, datum) in data.withIndex()) {
-            val angle = 360F * datum/2000
+
+            val datumInt: Int = datum.toInt()
+            val persent = if(datumInt<=1)1 else  datumInt*4
+
+            val angle = 360F * datum / persent
             paint.color = colors.getOrNull(index) ?: randomColor()
             //немного математики, чтобы рисовать «дуги»:
             canvas.drawArc(oval, startFrom, angle, false, paint)
@@ -141,29 +145,49 @@ class StatsView @JvmOverloads constructor(
         //ставим точку
         var startFromPoint = -90F
         for ((index, datum) in data.withIndex()) {
-            val angle = 1F * datum/2000
-          paint.color =  colors.getOrNull(R.styleable.StatsView_color1) ?: R.styleable.StatsView_color1
+
+            val datumInt: Int = datum.toInt()
+            val persent = if(datumInt<=1)1 else  datumInt*4
+
+
+            val angle = 1F * datum /persent
+
+            paint.color =
+                colors.getOrNull(R.styleable.StatsView_color1) ?: R.styleable.StatsView_color1
             canvas.drawArc(oval, startFromPoint, angle, false, paint)
             startFromPoint += angle
         }
 
 
+        for ((index, datum) in data.withIndex()) {
 
-//Для отображения текста выберем другую«кисть»:
-        //И в onDraw просто выведем текст, используя format:
-        canvas.drawText(
-            "%.2f%%".format(data.sum() * 100/2000),
-            center.x,
-            center.y + textPaint.textSize / 4,
-            textPaint,
-        )
+            val datumInt: Int = datum.toInt()
 
-        //нарисовать квадрат с привязкой к кругу
-        // canvas.drawRect(oval,paint)
+            val persent = if(datumInt<=1)1 else  datumInt*4
 
+
+            // val persent = datumInt()
+            //Для отображения текста выберем другую«кисть»:
+            //И в onDraw просто выведем текст, используя format:
+            canvas.drawText(
+                "%.2f%%".format(data.sum() *100/ persent),
+                center.x,
+                center.y + textPaint.textSize ,
+                textPaint,
+            )
+
+            //нарисовать квадрат с привязкой к кругу
+            // canvas.drawRect(oval,paint)
+
+        }
     }
-
 
 
     private fun randomColor() = Random.nextInt(0xFF000000.toInt(), 0xFFFFFFFF.toInt())
 }
+
+
+
+
+
+
